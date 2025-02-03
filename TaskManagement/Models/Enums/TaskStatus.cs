@@ -6,4 +6,4 @@ namespace TaskManagement.Models
         InProgress,
         Completed
     }
-}
+}   
