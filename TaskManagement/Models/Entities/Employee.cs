@@ -20,6 +20,6 @@ namespace TaskManagement.Models
         public List<string> Skills { get; set; }
         public int YearsOfExperience { get; set; }
         public ICollection<Project> Projects { get; set; }
-        public ICollection<Task> Tasks { get; set; }
+        public ICollection<ProjectTask> Tasks { get; set; }
     }
 }

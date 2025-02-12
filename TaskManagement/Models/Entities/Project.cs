@@ -8,7 +8,7 @@ namespace TaskManagement.Models
         public DateTime StartDate { get; set; }  
         public DateTime? EndDate { get; set; }   
         public ProjectStatus Status { get; set; }  
-        public ICollection<Task> Tasks { get; set; }  
+        public ICollection<ProjectTask> Tasks { get; set; }  
         public ICollection<Employee> Employees { get; set; }  
         public int? Budget { get; set; }  
     }
