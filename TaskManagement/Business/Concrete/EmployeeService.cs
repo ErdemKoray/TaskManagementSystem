@@ -149,6 +149,8 @@ namespace TaskManagement.Business
                     Employee.Role = dto.Role;
                     Employee.Skills = dto.Skills;
                     Employee.YearsOfExperience = dto.YearsOfExperience;
+                    await employeeRepository.UpdateAsync(Employee);
+                    await employeeRepository.SaveAsync();
                 }
             }
             catch (Exception ex)

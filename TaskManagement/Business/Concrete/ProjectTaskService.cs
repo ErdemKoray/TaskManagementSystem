@@ -13,39 +13,29 @@ namespace TaskManagement.Business
             _projectRepository = projectRepository;
         }
 
-        public async Task<Response> AddProjectTaskAsync(int ProjectId , ProjectTaskCreateDto dto)
+        public async Task<Response> AddProjectTaskAsync(ProjectTaskCreateDto dto)
         {
             var Response = new Response();
-            var Project = await _projectRepository.GetByIdAsync(ProjectId);
-            if (Project == null)
+            try
+            {
+                var newTask = new ProjectTask()
+                {
+                    Title = dto.Title,
+                    Description = dto.Description,
+                    Status = dto.Status,
+                    Priority = dto.Priority,
+                    ProjectId = dto.ProjectId,
+                    AssignedEmployeeId = dto.AssignedEmployeeId
+                };
+                await _projectTaskRepository.AddAsync(newTask);
+                await _projectTaskRepository.SaveAsync();
+                Response.Data = newTask;
+                Response.Message = "Task Added Successfully";
+            }
+            catch (Exception ex)
             {
                 Response.Success = false;
-                Response.Message = "Project not found";
-                return Response;
-            }
-            else
-            {
-                try
-                {
-                    var newTask = new ProjectTask()
-                    {
-                        Title = dto.Title,
-                        Description = dto.Description,
-                        Status = dto.Status,
-                        Priority = dto.Priority,
-                        ProjectId = Project.Id,
-                        AssignedEmployeeId = dto.AssignedEmployeeId
-                    };
-                    await _projectTaskRepository.AddAsync(newTask);
-                    await _projectTaskRepository.SaveAsync();
-                    Response.Data = newTask;
-                    Response.Message = "Task Added Successfully";
-                }
-                catch (Exception ex)
-                {
-                    Response.Success = false;
-                    Response.Message = $"An error occurred while adding task : {ex.Message}";
-                }
+                Response.Message = $"An error occurred while adding task : {ex.Message}";
             }
             return Response;
         }
